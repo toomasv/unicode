@@ -152,7 +152,7 @@ context [
 	type: function [val][
 		switch type?/word val [
 			char!		[to-integer val]
-			word! 		[to-integer debase/base skip to-string val 2 16]; 'U+hex
+			word! 		[to-integer probe debase/base skip to-string val 2 16]; 'U+hex
 			integer! 	[val] 
 			binary! 	[to-integer to-char val] 						; utf-8
 			issue!		[to-integer debase/base to-string val 16] 		; Hex
@@ -169,14 +169,20 @@ context [
 		self/codes: none
 		switch val [
 			show 	 [chart: true self/char-set: val: 'latin]
-			;pages 	 [print "List of pages:" foreach i s: keys-of page [print i] return keys-of ks]
+			pages 	 [
+				print "List of pages:" 
+				return collect [foreach page [scripts symbols collections][
+					probe page
+					foreach i s: keys-of get page [prin "   " print i keep i] 
+				]]
+			]
 			all-symbols  [
-				print "List of symbols:" foreach i s: sort extract syms 2 [print i]
-				print "List of dingbats:" foreach i d: sort extract dings 2 [print i] 
+				print "List of symbols:" foreach i s: sort extract syms 2 [prin "   " print i]
+				print "List of dingbats:" foreach i d: sort extract dings 2 [prin "   " print i] 
 				return reduce [s d]
 			]
 		]
-		if word? v: val [
+		if all [word? v: val not find [show pages all-symbols] val] [
 			either vals: any [scripts/:val symbols/:val collections/:val][
 				set [val upper] vals
 			][
