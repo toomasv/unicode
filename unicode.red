@@ -170,8 +170,11 @@ context [
 		switch val [
 			show 	 [chart: true self/char-set: val: 'latin]
 			;pages 	 [print "List of pages:" foreach i s: keys-of page [print i] return keys-of ks]
-			all-symbols  [print "List of symbols:" foreach i s: sort extract symbols 2 [print i]
-					  print "List of dingbats:" foreach i d: sort extract dingbats 2 [print i] return reduce [s d]]
+			all-symbols  [
+				print "List of symbols:" foreach i s: sort extract syms 2 [print i]
+				print "List of dingbats:" foreach i d: sort extract dings 2 [print i] 
+				return reduce [s d]
+			]
 		]
 		if word? v: val [
 			either vals: any [scripts/:val symbols/:val collections/:val][
@@ -181,7 +184,7 @@ context [
 			]
 		]
 		if string? v: val [
-			val: any [select symbols val select dingbats val]
+			val: any [select syms val select dings val]
 			unless val [
 				out: copy []
 				foreach symset [syms dings][
