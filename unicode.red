@@ -4,7 +4,8 @@ Red [
 	Needs: %range.red
 	Needs-Gist: https://gist.github.com/toomasv/0e3244375afbedce89b3719c8be7eac0
 ]
-do %range.red
+do https://tinyurl.com/yxlrnlun ;https://preview.tinyurl.com/yxlrnlun 
+;do %range.red
 syms:  load %symbols
 dings: load %dingbats
 context [
