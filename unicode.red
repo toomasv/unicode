@@ -47,7 +47,7 @@ context [
 				append dr compose [font ft text (as-pair x y) (to-string chars/1)]
 				append dr compose [font dc text (as-pair x y + 57) (
 					st: to-string to-integer chars/1 
-					probe pad/left st 8 - (8 - (length? st) / 2)
+					pad/left st 8 - (8 - (length? st) / 2)
 				)]
 			][
 				self/lastchar: to-integer first back chars 
@@ -117,7 +117,7 @@ context [
 		picts2:				[#01F900 #01F9FF]
 	)
 	lists: copy []
-	show: func [chars][
+	show_: func [chars][
 		view append compose/deep [
 			chart: base 1000x610 white
 				draw [(make-draw chars)]
@@ -129,7 +129,8 @@ context [
 				data ["Code2003" "EversonMono" "Lucida Sans Unicode" "Symbola" "Tahoma" "Unifont"]
 				select 1
 				on-change [
-					ft/name: pick face/data face/selected show chart/draw
+					ft/name: pick face/data face/selected 
+					show chart/draw
 					fdrop: take pos: at face/parent/pane 4
 					insert pos flist: make fdrop [type: 'text-list size: 200x115]
 				]
@@ -152,7 +153,7 @@ context [
 	type: function [val][
 		switch type?/word val [
 			char!		[to-integer val]
-			word! 		[to-integer probe debase/base skip to-string val 2 16]; 'U+hex
+			word! 		[to-integer debase/base skip to-string val 2 16]; 'U+hex
 			integer! 	[val] 
 			binary! 	[to-integer to-char val] 						; utf-8
 			issue!		[to-integer debase/base to-string val 16] 		; Hex
@@ -182,7 +183,7 @@ context [
 				return reduce [s d]
 			]
 		]
-		if all [word? v: val not find [show pages all-symbols] val] [
+		if word? v: val [
 			either vals: any [scripts/:val symbols/:val collections/:val][
 				set [val upper] vals
 			][
@@ -215,7 +216,7 @@ context [
 		set [firstchar lastchar] reduce [val upper]
 		self/codes: any [codes range val upper]
 		collect/into [foreach i codes [keep to-char i]] clear chars 
-		either chart [show chars][chars]
+		either chart [show_ chars][chars]
 	]
 ]
 
