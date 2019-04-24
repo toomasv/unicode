@@ -1,7 +1,9 @@
 # unicode
 
 Needs`range.red` at https://gist.github.com/toomasv/0e3244375afbedce89b3719c8be7eac0
-and also `dingbats` and `symbols` from this repo
+and also `dingbats` and `symbols` from this repo.
+
+Uses some unicode-rich fonts - "Code2003" "EversonMono" "Lucida Sans Unicode" "Symbola" "Tahoma" "Unifont".
 
 ## usage
 
